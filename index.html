@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin:50px 300px auto;
+        }
+        fieldset{
+            width:600px;
+            height: 130px;
+            border:2px solid orangered;
+            margin-bottom: 20px;
+        }
+        table{
+            width: 600px;
+            border:2px solid rebeccapurple;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+   <fieldset>
+       <legend>信息系统</legend>
+       <div>
+           <span>姓名</span>
+           <input type="text" placeholder="请输入姓名" v-model="NewStudent.name">
+
+       </div>
+       <div>
+           <span>性别</span>
+           <select v-model="NewStudent.sex">
+               <option value="男">男</option>
+               <option value="女">女</option>
+           </select>
+
+       </div>
+       <div>
+           <span>年龄</span>
+           <input type="text" placeholder="请输入年龄" v-model="NewStudent.age">
+
+       </div>
+       <div>
+           <span>手机</span>
+           <input type="text" placeholder="请输入手机" v-model="NewStudent.phone">
+
+       </div>
+       <button @click="createNewStudent()">提交表单</button>
+          </fieldset>
+    <table>
+        <thead>
+        <tr>
+            <td>姓名</td>
+            <td>性别</td>
+            <td>年龄</td>
+            <td>手机</td>
+        </tr>
+        </thead>
+        <tbody v-for="(p,index) in person">
+        <tr>
+            <td>{{p.name}}</td>
+            <td>{{p.sex}}</td>
+            <td>{{p.age}}</td>
+            <td>{{p.phone}}</td>
+            <td><button @click="deleteStudent(index)">delete</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="js/vue.js"></script>
+<script>
+    Vue.config.productionTip = false;
+    new Vue({
+        el:'#app',
+        data: {
+            person: [
+                {name: '张三', age: 12, sex: "male", phone: "72498356927"},
+                {name: 'lisi', age: 11, sex: "female", phone: "742346927"},
+                {name: 'wangs', age: 13, sex: "male", phone: "72498235927"},
+                {name: 'fff', age: 14, sex: "male", phone: "724256927"}
+            ],
+            NewStudent: {name: '', age: 0, sex: '男', phone: ''}
+        },
+            methods:{
+                createNewStudent(){
+                    if(this.NewStudent.name===''){
+                        alert("姓名不能为空。");
+                        return;
+                    }if(this.NewStudent.phone===''){
+                        alert("手机号码不能为空。");
+                        return;
+                    }if(this.NewStudent.age<0){
+                        alert("年龄输入错误。");
+                        return;
+                    }
+                    this.person.unshift(this.NewStudent);
+                    this.NewStudent={name:'',age:0,sex:'男',phone:''};
+                },
+                deleteStudent(index){
+                    this.person.splice(index,1);
+                },
+
+            }
+
+
+    });
+</script>
+</body>
+</html>
